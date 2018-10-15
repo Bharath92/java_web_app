@@ -25,7 +25,12 @@ build:
        mkdir -p ~/.m2
     - shipctl replace temp/settings.xml pom.xml
     - cp temp/settings.xml ~/.m2/.
-    - mvn -q -B clean install deploy
+    - |
+       export JAVA_HOME=/usr/java/jdk1.8.0_181-amd64
+       export PATH=$PATH:$JAVA_HOME
+       sudo update-alternatives --set java /usr/java/jdk1.8.0_181-amd64/bin/java
+       sudo update-alternatives --set javac /usr/java/jdk1.8.0_181-amd64/bin/javac
+       mvn -q -B clean install deploy
     - ls -al $SHIPPABLE_BUILD_DIR/target
 
 # OPTIONAL: if you want to use custom Docker Build Image and also store information in a params
